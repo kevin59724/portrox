@@ -850,7 +850,28 @@ html.theme-biophilic .logo-pr-img {
     gap: 56px !important;
   }
 
+  /* Evitar desbordamiento horizontal de la tarjeta animada por GSAP */
+  #comparacion {
+    overflow-x: hidden !important;
+  }
+
+  #comparacion .comparison-grid>div {
+    overflow: hidden;
+    max-width: 100%;
+  }
+
+
+  /* Mockup Portrox: ocultar links, mostrar hamburguesa */
+  .mockup-nav-links {
+    display: none !important;
+  }
+
+  .mockup-nav-hamburger {
+    display: flex !important;
+  }
+
   /* Membership cards: 1 columna, sin scale en featured */
+
   .membership-grid {
     grid-template-columns: 1fr !important;
   }

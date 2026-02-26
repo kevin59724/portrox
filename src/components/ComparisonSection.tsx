@@ -118,13 +118,23 @@ function PortroxMockup() {
             {/* Navbar premium */}
             <div style={{ background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid color-mix(in srgb, var(--gold) 15%, transparent)', backdropFilter: 'blur(12px)', padding: '12px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', transition: 'border-color 0.6s ease' }}>
                 <span style={{ color: '#fff', fontFamily: 'Georgia, serif', fontWeight: 700, fontSize: 14, letterSpacing: '0.05em' }}>Marca</span>
-                <div style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
+
+                {/* Links — visibles solo en escritorio */}
+                <div className="mockup-nav-links" style={{ display: 'flex', gap: 20, alignItems: 'center' }}>
                     {['Servicios', 'Portafolio'].map(l => (
                         <span key={l} style={{ color: 'rgba(255,255,255,0.55)', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{l}</span>
                     ))}
                     <span style={{ color: 'var(--gold)', fontSize: 10, letterSpacing: '0.1em', border: '1px solid var(--gold)', padding: '4px 12px', borderRadius: 4, transition: 'color 0.6s ease, border-color 0.6s ease' }}>Contacto</span>
                 </div>
+
+                {/* Hamburguesa — visible solo en móvil */}
+                <div className="mockup-nav-hamburger" style={{ display: 'none', flexDirection: 'column', gap: 4, cursor: 'pointer' }}>
+                    <div style={{ width: 18, height: 1.5, background: 'var(--gold)', borderRadius: 1 }} />
+                    <div style={{ width: 14, height: 1.5, background: 'var(--gold)', borderRadius: 1 }} />
+                    <div style={{ width: 18, height: 1.5, background: 'var(--gold)', borderRadius: 1 }} />
+                </div>
             </div>
+
 
             {/* Hero premium */}
             <div style={{
