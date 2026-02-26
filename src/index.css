@@ -1,0 +1,817 @@
+﻿/* â”€â”€ NO importar fuentes aquÃ­ â€” ya estÃ¡n en index.html â”€â”€â”€â”€ */
+@import "tailwindcss";
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   DESIGN TOKENS â€” modificables por el ThemeSwitcher
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+:root {
+  /* Tema 1 â€” Ã‰bano Dorado (default) */
+  --gold: #D4AF37;
+  --gold-dim: rgba(212, 175, 55, 0.15);
+  --gold-glow: rgba(212, 175, 55, 0.35);
+  --bg-deep: #0A0A0A;
+  --bg-deeper: #060606;
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --radius: 4px;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* transiciÃ³n suave para los cambios de variable */
+  --theme-transition: 0.6s ease;
+}
+
+/* â”€â”€ Reset & Base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background-color 0.8s ease, font-family 0.1s ease;
+}
+
+/* â”€â”€ Scrollbar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dim);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* â”€â”€ Typography â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* â”€â”€ Glassmorphism â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 0 transparent;
+  transition: background var(--theme-transition), border-color var(--theme-transition), box-shadow var(--theme-transition);
+}
+
+.glass:hover {
+  box-shadow: 0 0 28px var(--gold-glow), 0 0 60px color-mix(in srgb, var(--gold) 6%, transparent);
+  border-color: color-mix(in srgb, var(--gold) 40%, var(--glass-border));
+}
+
+/* â”€â”€ Gold glow border â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.gold-border {
+  border: 1px solid var(--gold);
+  box-shadow: 0 0 24px var(--gold-glow), inset 0 0 24px var(--gold-dim);
+  transition: border-color var(--theme-transition), box-shadow var(--theme-transition);
+}
+
+/* â”€â”€ Weighted button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.btn-weighted {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: color 0.6s ease;
+  z-index: 0;
+}
+
+.btn-weighted::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-101%);
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: -1;
+}
+
+.btn-weighted:hover::before {
+  transform: translateX(0);
+}
+
+.btn-gold::before {
+  background: var(--gold);
+}
+
+.btn-gold:hover {
+  color: var(--bg-deep);
+}
+
+.btn-white-sweep::before {
+  background: #ffffff;
+}
+
+.btn-white-sweep:hover {
+  color: #0A0A0A;
+}
+
+/* â”€â”€ Pulsing dot â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@keyframes pulse-gold {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--gold-glow);
+    opacity: 1;
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px transparent;
+    opacity: 0.7;
+  }
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse-gold 2s ease-in-out infinite;
+  transition: background var(--theme-transition);
+}
+
+/* â”€â”€ Blinking cursor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* â”€â”€ Gradient text â€” usa var(--gold) para que cambie con el tema */
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 30%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* Fix descenders (g,y,p,q) clipped by background-clip bounding box */
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+  display: inline-block;
+}
+
+/* â”€â”€ Section pad â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.section-pad {
+  padding: 120px 0;
+}
+
+/* â”€â”€ Shimmer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--gold) 12%, transparent), transparent);
+  transition: background 0.6s ease;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* â”€â”€ Nav scroll â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.nav-scroll {
+  background: rgba(10, 10, 10, 0.6) !important;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--gold) !important;
+  transition: border-color var(--theme-transition);
+}
+
+/* â”€â”€ Day cell â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.day-cell {
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.8s ease, border-color 0.8s ease;
+}
+
+.day-cell.active {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+}
+
+/* â”€â”€ Membership card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.membership-card {
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  transition: transform 0.4s ease, border-color var(--theme-transition);
+}
+
+.membership-card:hover {
+  transform: translateY(-4px);
+}
+
+/* â”€â”€ Terminal text â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.terminal-line {
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--gold);
+  opacity: 0.85;
+  transition: color var(--theme-transition);
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   GLITCH / DISTORTION OVERLAY
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* Overlay principal */
+.glitch-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Scanlines */
+.glitch-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.15) 2px,
+      rgba(0, 0, 0, 0.15) 4px);
+}
+
+/* Chromatic aberration layers */
+.glitch-r,
+.glitch-g,
+.glitch-b {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: screen;
+  opacity: 0.5;
+}
+
+.glitch-r {
+  background: rgba(255, 0, 0, 0.08);
+}
+
+.glitch-g {
+  background: rgba(0, 255, 0, 0.05);
+}
+
+.glitch-b {
+  background: rgba(0, 0, 255, 0.08);
+}
+
+/* Flash breve */
+.glitch-flash {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  opacity: 0;
+}
+
+/* Slices horizontales */
+.glitch-slice {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--gold);
+  opacity: 0;
+  mix-blend-mode: overlay;
+}
+
+/* Badge de tema actual */
+.theme-badge {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  transition: border-color var(--theme-transition);
+}
+
+.theme-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  transition: background var(--theme-transition);
+}
+
+.theme-badge-name {
+  color: var(--gold);
+  font-weight: 600;
+  transition: color var(--theme-transition);
+}
+
+/* â”€â”€ Countdown arc â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.theme-countdown {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 10000;
+  width: 6px;
+  background: linear-gradient(to top, var(--gold), transparent);
+  border-radius: 3px;
+  transform-origin: bottom;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   THEME BEHAVIORAL IDENTITIES â€” v2 Full Specification
+   Cada clase se aplica al <html> al cambiar de tema.
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   1. TECH: "Industrial Precision" / "Monolithic Digital"
+   Inspired by Nothing, Teenage Engineering.
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* â”€â”€ Pixel dot grid fijo en el fondo â”€â”€ */
+html.theme-tech::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* â”€â”€ Tabular nums â€” todos los nÃºmeros exactos â”€â”€ */
+html.theme-tech * {
+  font-variant-numeric: tabular-nums;
+}
+
+/* â”€â”€ Esquinas COMPLETAMENTE afiladas â€” brutalismo â”€â”€ */
+html.theme-tech .glass,
+html.theme-tech .btn-weighted,
+html.theme-tech .membership-card,
+html.theme-tech button,
+html.theme-tech input {
+  border-radius: 0 !important;
+}
+
+/* â”€â”€ Bordes sÃ³lidos 1px oscuros, SIN sombras â”€â”€ */
+html.theme-tech .glass {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.025) !important;
+  box-shadow: none !important;
+}
+
+/* â”€â”€ Profundidad via solid offset, no sombras difusas â”€â”€ */
+html.theme-tech .membership-card {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.06) !important;
+}
+
+/* â”€â”€ TipografÃ­a headings: Black Ultra-condensed, tracking tighter â”€â”€ */
+html.theme-tech h1,
+html.theme-tech h2,
+html.theme-tech h3 {
+  font-weight: 900 !important;
+  letter-spacing: -0.045em !important;
+  font-style: normal !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+/* â”€â”€ Monospace para metadatos, etiquetas, botones: estÃ©tica terminal â”€â”€ */
+html.theme-tech .btn-weighted,
+html.theme-tech button,
+html.theme-tech [style*="uppercase"],
+html.theme-tech [style*="letter-spacing"] {
+  font-family: 'Space Mono', 'Courier New', monospace !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* â”€â”€ Hover BINARIO INSTANTÃNEO â€” 0ms, sin transiciÃ³n â”€â”€ */
+html.theme-tech .btn-weighted {
+  transition: background 0ms, color 0ms, border-color 0ms !important;
+}
+
+html.theme-tech .btn-weighted::before {
+  transition: transform 0ms !important;
+}
+
+/* InversiÃ³n binaria: bg white â†’ text black */
+html.theme-tech .btn-gold:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+html.theme-tech .btn-gold:hover::before {
+  display: none;
+}
+
+/* â”€â”€ Gradient text frÃ­o: blanco â†’ azul elÃ©ctrico â”€â”€ */
+html.theme-tech .gradient-text {
+  background: linear-gradient(135deg, #ffffff 35%, var(--gold) 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+  display: inline-block;
+}
+
+/* â”€â”€ Scrollbar de 2px lÃ­nea â€” precisiÃ³n industrial â”€â”€ */
+html.theme-tech::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   2. FASHION: "Avant-Garde Boutique" / "Cinematic Editorial"
+   Inspired by Vogue, Celine, Bottega Veneta.
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* â”€â”€ Contenedores SIN bordes visibles, espacio negativo masivo â”€â”€ */
+html.theme-fashion .glass {
+  border: none !important;
+  background: rgba(247, 243, 240, 0.025) !important;
+  box-shadow: none !important;
+}
+
+html.theme-fashion .membership-card {
+  border-color: rgba(247, 243, 240, 0.05) !important;
+  background: rgba(247, 243, 240, 0.02) !important;
+}
+
+/* â”€â”€ Botones PÃLDORA perfectos â”€â”€ */
+html.theme-fashion .btn-weighted,
+html.theme-fashion .btn-gold,
+html.theme-fashion .btn-white-sweep {
+  border-radius: 999px !important;
+}
+
+html.theme-fashion .btn-weighted::before {
+  border-radius: 999px !important;
+}
+
+/* â”€â”€ TipografÃ­a headings: letras gigantes, itÃ¡lica cormorant â”€â”€ */
+html.theme-fashion h1,
+html.theme-fashion h2,
+html.theme-fashion h3 {
+  font-style: italic !important;
+  font-family: 'Cormorant', Georgia, serif !important;
+  letter-spacing: -0.02em !important;
+  font-weight: 500 !important;
+}
+
+/* â”€â”€ Etiquetas uppercase tiny â€” simulando revista de moda â”€â”€ */
+html.theme-fashion p[style*="letter-spacing"],
+html.theme-fashion span[style*="uppercase"] {
+  font-size: 9px !important;
+  letter-spacing: 0.32em !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* â”€â”€ Gradient text: Champagne cÃ¡lido â”€â”€ */
+html.theme-fashion .gradient-text {
+  background: linear-gradient(135deg, #F7F3F0 15%, var(--gold) 75%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+  display: inline-block;
+}
+
+/* â”€â”€ Transiciones elongadas â€” ritmo de pasarela â”€â”€ */
+html.theme-fashion .glass,
+html.theme-fashion .btn-weighted,
+html.theme-fashion button,
+html.theme-fashion a {
+  transition-timing-function: cubic-bezier(0.45, 0, 0.1, 1) !important;
+  transition-duration: 0.85s !important;
+}
+
+html.theme-fashion .btn-weighted::before {
+  transition-duration: 0.85s !important;
+  transition-timing-function: cubic-bezier(0.45, 0, 0.1, 1) !important;
+}
+
+/* â”€â”€ LÃ­nea inferior que se expande de izquierda a derecha â€” nav links â”€â”€ */
+html.theme-fashion nav a {
+  position: relative;
+  text-decoration: none !important;
+}
+
+html.theme-fashion nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.7s cubic-bezier(0.45, 0, 0.1, 1);
+}
+
+html.theme-fashion nav a:hover::after {
+  width: 100%;
+}
+
+/* â”€â”€ Mix-blend para imÃ¡genes de fondo â€” tono editorial â”€â”€ */
+html.theme-fashion [style*="brightness(0.18)"] {
+  filter: brightness(0.14) saturate(0.15) !important;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   3. SAAS: "Modern Velocity" / "Tier-1 Venture"
+   Inspired by Linear, Stripe, Vercel.
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* â”€â”€ Bento Box cards: rounded-xl/2xl â”€â”€ */
+html.theme-saas .glass {
+  border-radius: 20px !important;
+  background: rgba(99, 102, 241, 0.07) !important;
+  border: 1px solid rgba(99, 102, 241, 0.2) !important;
+  /* Sombras mÃºltiples para elevaciÃ³n tÃ¡ctil */
+  box-shadow:
+    0 0 0 1px rgba(99, 102, 241, 0.12),
+    0 8px 30px rgba(0, 0, 0, 0.18),
+    0 2px 8px rgba(99, 102, 241, 0.08) !important;
+}
+
+html.theme-saas .membership-card {
+  border-radius: 20px !important;
+}
+
+/* â”€â”€ Botones rounded-lg, magnÃ©ticos â”€â”€ */
+html.theme-saas .btn-weighted,
+html.theme-saas .btn-gold,
+html.theme-saas .btn-white-sweep {
+  border-radius: 10px !important;
+}
+
+html.theme-saas .btn-weighted::before {
+  border-radius: 10px !important;
+}
+
+/* â”€â”€ Efecto magnÃ©tico: scale + glow exterior â”€â”€ */
+html.theme-saas .btn-weighted:hover {
+  transform: scale(1.04) !important;
+  box-shadow: 0 0 28px var(--gold-glow), 0 0 60px color-mix(in srgb, var(--gold) 15%, transparent) !important;
+}
+
+/* â”€â”€ Brillo dinÃ¡mico que recorre el borde (shimmer ring) â”€â”€ */
+html.theme-saas .btn-weighted::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 11px;
+  background: conic-gradient(from 0deg, transparent 0%, var(--gold) 25%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -2;
+  animation: none;
+}
+
+html.theme-saas .btn-weighted:hover::after {
+  opacity: 0.4;
+  animation: spin-ring 2s linear infinite;
+}
+
+@keyframes spin-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* â”€â”€ TipografÃ­a: gradient heading multi-stop â”€â”€ */
+html.theme-saas .gradient-text {
+  background: linear-gradient(135deg, #F8FAFC 0%, var(--gold) 50%, #818CF8 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+  display: inline-block;
+}
+
+html.theme-saas h1,
+html.theme-saas h2 {
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+}
+
+/* â”€â”€ Body text: gris suave, line-height holgado â”€â”€ */
+html.theme-saas p {
+  color: rgba(248, 250, 252, 0.55) !important;
+  line-height: 1.85 !important;
+}
+
+/* â”€â”€ Transiciones velocity: entrada suave y precisa â”€â”€ */
+html.theme-saas .glass,
+html.theme-saas button,
+html.theme-saas a {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition-duration: 0.22s !important;
+}
+
+html.theme-saas .btn-weighted {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.22s ease,
+    background 0.22s ease !important;
+}
+
+/* â”€â”€ Nav con glow Ã­ndigo al hacer scroll â”€â”€ */
+html.theme-saas .nav-scroll {
+  box-shadow: 0 0 32px rgba(99, 102, 241, 0.2), 0 1px 0 rgba(99, 102, 241, 0.25) !important;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   4. BIOPHILIC: "Biophilic Design" / "Ethical Modernism"
+   Inspired by B-Corp, sustainable architecture, Patagonia.
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+
+/* â”€â”€ Textura de papel reciclado via SVG noise â”€â”€ */
+html.theme-biophilic::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* â”€â”€ Curvas orgÃ¡nicas amplias â”€â”€ */
+html.theme-biophilic .glass {
+  border-radius: 28px !important;
+  background: rgba(226, 114, 91, 0.04) !important;
+  border-color: rgba(135, 169, 107, 0.2) !important;
+  box-shadow: none !important;
+  /* Sin sombras â€” contraste de color */
+}
+
+/* â”€â”€ Membership cards: esquinas ASIMÃ‰TRICAS â€” formas vivas â”€â”€ */
+html.theme-biophilic .membership-card {
+  border-radius: 40px 8px 40px 8px !important;
+  box-shadow: none !important;
+}
+
+/* â”€â”€ Botones redondeados robustos â€” amigables pero firmes â”€â”€ */
+html.theme-biophilic .btn-weighted,
+html.theme-biophilic .btn-gold,
+html.theme-biophilic .btn-white-sweep {
+  border-radius: 999px !important;
+}
+
+html.theme-biophilic .btn-weighted::before {
+  border-radius: 999px !important;
+  /* Efecto AGUA SUBIENDO: transform-origin bottom, scaleY */
+  transform-origin: bottom center !important;
+  transform: scaleY(0) translateX(-101%) !important;
+  /* Reset the default slide */
+}
+
+/* Override: reemplazar el slide horizontal por llenado vertical */
+html.theme-biophilic .btn-weighted::before {
+  transform: scaleY(0) !important;
+  transition: transform 0.9s cubic-bezier(0.16, 1.3, 0.3, 1) !important;
+}
+
+html.theme-biophilic .btn-weighted:hover::before {
+  transform: scaleY(1) !important;
+}
+
+/* â”€â”€ TipografÃ­a: Serif humanista Lora para titulares â”€â”€ */
+html.theme-biophilic h1,
+html.theme-biophilic h2,
+html.theme-biophilic h3 {
+  font-family: 'Lora', Georgia, serif !important;
+  font-weight: 500 !important;
+  font-style: normal !important;
+  letter-spacing: 0 !important;
+  line-height: 1.15 !important;
+}
+
+/* Serif italic para los em/italic â€” drama humano */
+html.theme-biophilic em {
+  font-family: 'Lora', Georgia, serif !important;
+  font-style: italic !important;
+}
+
+/* Cuerpo: Archivo abierto y accesible */
+html.theme-biophilic p,
+html.theme-biophilic span {
+  font-family: 'Archivo', system-ui, sans-serif !important;
+}
+
+/* â”€â”€ Gradient text cÃ¡lido: warm sand â†’ terracotta â”€â”€ */
+html.theme-biophilic .gradient-text {
+  background: linear-gradient(135deg, #F5F5DC 15%, var(--gold) 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+  display: inline-block;
+}
+
+/* â”€â”€ Transiciones orgÃ¡nicas: flujo de agua, crecimiento vegetal â”€â”€ */
+html.theme-biophilic .glass,
+html.theme-biophilic .membership-card,
+html.theme-biophilic button,
+html.theme-biophilic a {
+  transition-timing-function: cubic-bezier(0.16, 1.3, 0.3, 1) !important;
+  transition-duration: 0.9s !important;
+}
+
+/* â”€â”€ Pulse dot: ritmo de respiraciÃ³n natural â”€â”€ */
+html.theme-biophilic .pulse-dot {
+  animation-duration: 3.5s !important;
+}
+
+/* â”€â”€ Fin de los estilos de tema â”€â”€ */
+
+/* 
+   LOGO IMAGE  CSS filter por tema
+   invert(1) = negro→blanco, blanconegro
+   sepia+hue-rotate+saturate = tinta al color del tema
+   mix-blend-mode: screen = fondo negro desaparece en navbar oscuro
+   ════ */
+
+/* Tema 1: Ébano Dorado (#D4AF37  hsl 43°) */.logo-pr-img {
+  filter: invert(1) sepia(1) saturate(500%) hue-rotate(8deg) brightness(95%);
+  mix-blend-mode: screen;
+  transition: filter 0.6s ease;
+}
+
+/* Tema 2: Tech  Electric Blue (#007AFF  hsl 211°) */
+html.theme-tech .logo-pr-img {
+  filter: invert(1) sepia(1) saturate(3000%) hue-rotate(172deg) brightness(95%);
+}
+
+/* Tema 3: Fashion  Burgundy (#B85C6E  hsl 350°) */
+html.theme-fashion .logo-pr-img {
+  filter: invert(1) sepia(1) saturate(600%) hue-rotate(312deg) brightness(80%);
+}
+
+/* Tema 4: SaaS  Indigo (#6366F1  hsl 239°) */
+html.theme-saas .logo-pr-img {
+  filter: invert(1) sepia(1) saturate(1800%) hue-rotate(202deg) brightness(100%);
+}
+
+/* Tema 5: Biophilic  Terracotta (#E2725B  hsl 12°) */
+html.theme-biophilic .logo-pr-img {
+  filter: invert(1) sepia(1) saturate(900%) hue-rotate(344deg) brightness(90%);
+}
