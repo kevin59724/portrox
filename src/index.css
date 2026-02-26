@@ -820,12 +820,7 @@ html.theme-biophilic .logo-pr-img {
    RESPONSIVE — Mobile First
    ══════════════════════════════════════════════════════════════ */
 
-/* overflow-x: clip en <html> previene scroll horizontal
-   SIN crear un scroll container (a diferencia de hidden)
-   → position:sticky funciona correctamente. */
-html {
-  overflow-x: clip;
-}
+
 
 /* ── Breakpoint principal: ≤ 768px ── */
 @media (max-width: 768px) {
@@ -864,13 +859,29 @@ html {
     transform: scale(1) !important;
   }
 
-  /* Services: contenido apilado verticalmente */
+  /* Services: en móvil desactivar sticky + altura fija → scroll normal */
+  #servicios [style*="sticky"] {
+    position: relative !important;
+    height: auto !important;
+    min-height: 100dvh;
+  }
+
+  /* Wrapper de services: altura auto en móvil */
+  #servicios>div[style*="dvh"] {
+    height: auto !important;
+  }
+
+  /* Grid interno: 1 columna, gap menor */
   .services-inner-grid {
     grid-template-columns: 1fr !important;
-    gap: 32px !important;
-    /* En móvil el texto queda arriba y las stats abajo */
-    padding-top: 24px;
-    padding-bottom: 24px;
+    gap: 36px !important;
+    padding: 80px 0 60px !important;
+    align-items: start !important;
+  }
+
+  /* Número grande de servicio — reducir en móvil */
+  .services-inner-grid span[style*="fontSize: 64"] {
+    font-size: 40px !important;
   }
 
   /* Número grande de cada servicio — reducir en móvil */

@@ -20,53 +20,59 @@ const SERVICIOS = [
         number: '03', tag: 'Optimización', title: 'Una web que no deja de crecer',
         desc: 'Lanzar no es el final. Analizamos el comportamiento de tus visitantes, optimizamos los puntos de mayor impacto y evolucionamos tu página para que siga convirtiendo mes a mes.',
         stats: [{ val: '+180%', label: 'Conversión a leads' }, { val: 'CRO', label: 'Metodología' }, { val: 'Mensual', label: 'Reporte' }],
-        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&q=80&auto=format&fit=crop',
+        image: 'https://plus.unsplash.com/premium_photo-1681586533774-1d9d42425712?q=80&w=977&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     },
 ];
 
 export default function Services() {
     const wrapperRef = useRef<HTMLDivElement>(null);
-    const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+    // Refs separados: BG (no escala, siempre full-viewport) y contenido (animable)
+    const bgRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
         const wrapper = wrapperRef.current;
         if (!wrapper) return;
+        const totalCards = SERVICIOS.length;
 
-        const totalCards = cardRefs.current.length;
+        const ctx = gsap.context(() => {
+            ScrollTrigger.create({
+                trigger: wrapper,
+                start: 'top top',
+                // 'bottom top' = cuando el wrapper sale del viewport por arriba
+                // Con wrapper de N*100dvh esto da exactamente 100dvh de sticky a la última card
+                end: 'bottom top',
+                scrub: 1.2,
+                onUpdate(self) {
+                    // totalProgress: 0 → N-1, termina en los primeros (N-1)/N del scroll
+                    const totalProgress = Math.min(self.progress * totalCards, totalCards - 1);
 
-        // Usamos el WRAPPER como trigger único.
-        // Las cards sticky no se mueven en el viewport, así que usar cada card
-        // como trigger individual hace que GSAP no calcule bien el progreso.
-        // Con el wrapper: progress 0→1 abarca toda la sección (totalCards * 100dvh).
-        const st = ScrollTrigger.create({
-            trigger: wrapper,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: 1.2,
-            onUpdate(self) {
-                const totalProgress = self.progress * (totalCards - 1); // 0 → (n-1)
+                    SERVICIOS.forEach((_, i) => {
+                        const bg = bgRefs.current[i];
+                        const content = contentRefs.current[i];
+                        if (!bg || !content) return;
 
-                cardRefs.current.forEach((card, i) => {
-                    if (!card) return;
+                        const p = Math.max(0, Math.min(1, totalProgress - i));
 
-                    // Cuánto hemos "pasado" más allá de esta card (0 = recién visible, 1 = saliendo)
-                    // La última card nunca se desenfoca
-                    const p = Math.max(0, Math.min(1, totalProgress - i));
+                        if (i < totalCards - 1) {
+                            // BG: sólo opacity + blur, SIN scale → siempre cubre el full viewport
+                            gsap.set(bg, {
+                                opacity: 1 - p * 0.75,
+                                filter: `blur(${p * 6}px)`,
+                            });
+                            // Contenido: scale + blur para el efecto de "retroceso"
+                            gsap.set(content, {
+                                scale: 1 - p * 0.06,
+                                opacity: 1 - p * 0.7,
+                                filter: `blur(${p * 6}px)`,
+                            });
+                        }
+                    });
+                },
+            });
+        }, wrapper);
 
-                    if (i < totalCards - 1) {
-                        gsap.set(card, {
-                            scale: 1 - p * 0.05,
-                            opacity: 1 - p * 0.6,
-                            filter: `blur(${p * 8}px)`,
-                        });
-                    }
-                });
-            },
-        });
-
-        return () => {
-            st.kill();
-        };
+        return () => ctx.revert();
     }, []);
 
     return (
@@ -76,33 +82,63 @@ export default function Services() {
                 <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, color: '#fff', lineHeight: 1.1 }}>Lo que construimos contigo</h2>
             </div>
 
-            {/* El wrapper necesita altura explícita = n cards × 100dvh para que
-                el scroll funcione correctamente con position:sticky */}
+            {/* Wrapper: N×100dvh — con end:'bottom top' la última card tiene 100dvh propios */}
             <div
                 ref={wrapperRef}
-                style={{
-                    position: 'relative',
-                    height: `${SERVICIOS.length * 100}dvh`,
-                }}
+                style={{ position: 'relative', height: `${SERVICIOS.length * 100}dvh`, background: 'var(--bg-deep)' }}
             >
                 {SERVICIOS.map((svc, i) => (
                     <div
                         key={svc.number}
-                        ref={el => { cardRefs.current[i] = el; }}
                         style={{
                             position: 'sticky',
                             top: 0,
                             height: '100dvh',
                             width: '100%',
                             overflow: 'hidden',
-                            willChange: 'transform, opacity, filter',
                             zIndex: i + 1,
+                            background: 'var(--bg-deep)',
                         }}
                     >
-                        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url("${svc.image}")`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.18) saturate(0.3)' }} />
-                        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, color-mix(in srgb, var(--bg-deep) 93%, transparent) 45%, color-mix(in srgb, var(--bg-deep) 55%, transparent) 100%)', transition: 'background 0.8s ease' }} />
+                        {/* ── CAPA DE FONDO ──────────────────────────────────────────
+                            Directamente en el sticky container, SIN ningún wrapper extra.
+                            GSAP solo aplica opacity/blur, NUNCA scale → siempre 100vw × 100dvh.
+                        ────────────────────────────────────────────────────────────── */}
+                        <div
+                            ref={el => { bgRefs.current[i] = el; }}
+                            style={{ position: 'absolute', inset: 0 }}
+                        >
+                            <div style={{
+                                position: 'absolute', inset: 0,
+                                backgroundImage: `url("${svc.image}")`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                filter: 'brightness(0.18) saturate(0.3)',
+                            }} />
+                            <div style={{
+                                position: 'absolute', inset: 0,
+                                background: 'linear-gradient(135deg, color-mix(in srgb, var(--bg-deep) 93%, transparent) 45%, color-mix(in srgb, var(--bg-deep) 55%, transparent) 100%)',
+                                transition: 'background 0.8s ease',
+                            }} />
+                        </div>
 
-                        <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', alignItems: 'center', maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+                        {/* ── CAPA DE CONTENIDO ──────────────────────────────────────
+                            Animada por GSAP (scale + opacity + blur).
+                            Separada del fondo para que el scale no limite la cobertura del BG.
+                        ────────────────────────────────────────────────────────────── */}
+                        <div
+                            ref={el => { contentRefs.current[i] = el; }}
+                            style={{
+                                position: 'relative',
+                                zIndex: 1,
+                                height: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                maxWidth: 1280,
+                                margin: '0 auto',
+                                padding: '0 24px',
+                            }}
+                        >
                             <div className="services-inner-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center', width: '100%' }}>
                                 <div>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
