@@ -25,16 +25,16 @@ const PLANES = [
 export default function Membership() {
     return (
         <section id="planes" style={{ background: 'var(--bg-deep)', padding: '120px 0', transition: 'background 0.8s ease' }}>
-            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
                 <div style={{ textAlign: 'center', marginBottom: 80 }}>
                     <p style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16, transition: 'color 0.6s ease' }}>Planes</p>
                     <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, color: '#fff', lineHeight: 1.1, marginBottom: 20 }}>Elige tu punto de partida</h2>
                     <p style={{ fontFamily: 'var(--font-sans)', fontSize: 16, color: 'rgba(255,255,255,0.42)', maxWidth: 480, margin: '0 auto' }}>Sin suscripciones ocultas. Sin sorpresas. Solo resultados.</p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24, alignItems: 'stretch' }}>
+                <div className="membership-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, alignItems: 'stretch' }}>
                     {PLANES.map(plan => (
-                        <div key={plan.id} className={plan.featured ? undefined : 'membership-card'} style={{
+                        <div key={plan.id} className={`${plan.featured ? 'membership-featured-scale' : 'membership-card'}`} style={{
                             borderRadius: 4, padding: '40px 36px', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden',
                             ...(plan.featured ? {
                                 background: 'var(--glass-bg)',

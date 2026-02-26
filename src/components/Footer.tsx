@@ -7,8 +7,8 @@ const LINKS = {
 export default function Footer() {
     return (
         <footer id="contacto" style={{ background: 'var(--bg-deeper)', borderTop: '1px solid rgba(255,255,255,0.04)', transition: 'background 0.8s ease' }}>
-            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '80px 32px 48px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 48, marginBottom: 72 }}>
+            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '80px 24px 48px' }}>
+                <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 48, marginBottom: 72 }}>
                     {/* Marca */}
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>

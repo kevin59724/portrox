@@ -11,7 +11,9 @@ import ThemeSwitcher from './components/ThemeSwitcher';
 
 export default function App() {
   return (
-    <>
+    // overflow-x: clip previene scroll horizontal SIN romper position:sticky
+    // (a diferencia de overflow-x: hidden que crea un scroll container)
+    <div style={{ overflowX: 'clip' }}>
       {/* Switcher de temas — vive fuera del flujo del DOM */}
       <ThemeSwitcher />
 
@@ -25,6 +27,6 @@ export default function App() {
         <Membership />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

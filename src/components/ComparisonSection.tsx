@@ -293,7 +293,7 @@ export default function ComparisonSection() {
             id="comparacion"
             style={{
                 background: 'linear-gradient(to bottom, var(--bg-deeper), var(--bg-deep))',
-                padding: '140px 0',
+                padding: 'clamp(72px, 10vw, 140px) 0',
                 overflow: 'hidden',
                 position: 'relative',
                 transition: 'background 0.8s ease',
@@ -312,7 +312,7 @@ export default function ComparisonSection() {
                 pointerEvents: 'none',
             }} />
 
-            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
 
                 {/* Header */}
                 <div style={{ textAlign: 'center', marginBottom: 80 }}>
@@ -329,7 +329,7 @@ export default function ComparisonSection() {
                 </div>
 
                 {/* Área de comparación */}
-                <div style={{
+                <div className="comparison-grid" style={{
                     display: 'grid',
                     gridTemplateColumns: '1fr 1fr',
                     gap: 32,

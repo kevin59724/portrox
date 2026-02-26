@@ -29,38 +29,81 @@ export default function Services() {
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
-            cardRefs.current.forEach((card, i) => {
-                if (!card || i === 0) return;
-                const prev = cardRefs.current[i - 1];
-                if (!prev) return;
-                ScrollTrigger.create({
-                    trigger: card, start: 'top 90%', end: 'top 20%', scrub: 1.2,
-                    onUpdate(self) {
-                        const p = self.progress;
-                        gsap.set(prev, { scale: 1 - p * 0.05, opacity: 1 - p * 0.6, filter: `blur(${p * 8}px)` });
-                    },
+        const wrapper = wrapperRef.current;
+        if (!wrapper) return;
+
+        const totalCards = cardRefs.current.length;
+
+        // Usamos el WRAPPER como trigger único.
+        // Las cards sticky no se mueven en el viewport, así que usar cada card
+        // como trigger individual hace que GSAP no calcule bien el progreso.
+        // Con el wrapper: progress 0→1 abarca toda la sección (totalCards * 100dvh).
+        const st = ScrollTrigger.create({
+            trigger: wrapper,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1.2,
+            onUpdate(self) {
+                const totalProgress = self.progress * (totalCards - 1); // 0 → (n-1)
+
+                cardRefs.current.forEach((card, i) => {
+                    if (!card) return;
+
+                    // Cuánto hemos "pasado" más allá de esta card (0 = recién visible, 1 = saliendo)
+                    // La última card nunca se desenfoca
+                    const p = Math.max(0, Math.min(1, totalProgress - i));
+
+                    if (i < totalCards - 1) {
+                        gsap.set(card, {
+                            scale: 1 - p * 0.05,
+                            opacity: 1 - p * 0.6,
+                            filter: `blur(${p * 8}px)`,
+                        });
+                    }
                 });
-            });
-        }, wrapperRef);
-        return () => ctx.revert();
+            },
+        });
+
+        return () => {
+            st.kill();
+        };
     }, []);
 
     return (
         <section id="servicios">
-            <div style={{ background: 'var(--bg-deep)', padding: '120px 32px 80px', textAlign: 'center', transition: 'background 0.8s ease' }}>
+            <div style={{ background: 'var(--bg-deep)', padding: '120px 24px 80px', textAlign: 'center', transition: 'background 0.8s ease' }}>
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16, transition: 'color 0.6s ease' }}>Servicios</p>
                 <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, color: '#fff', lineHeight: 1.1 }}>Lo que construimos contigo</h2>
             </div>
 
-            <div ref={wrapperRef} style={{ position: 'relative' }}>
+            {/* El wrapper necesita altura explícita = n cards × 100dvh para que
+                el scroll funcione correctamente con position:sticky */}
+            <div
+                ref={wrapperRef}
+                style={{
+                    position: 'relative',
+                    height: `${SERVICIOS.length * 100}dvh`,
+                }}
+            >
                 {SERVICIOS.map((svc, i) => (
-                    <div key={svc.number} ref={el => { cardRefs.current[i] = el; }} style={{ position: 'sticky', top: 0, height: '100dvh', width: '100%', overflow: 'hidden', willChange: 'transform, opacity, filter', zIndex: i + 1 }}>
+                    <div
+                        key={svc.number}
+                        ref={el => { cardRefs.current[i] = el; }}
+                        style={{
+                            position: 'sticky',
+                            top: 0,
+                            height: '100dvh',
+                            width: '100%',
+                            overflow: 'hidden',
+                            willChange: 'transform, opacity, filter',
+                            zIndex: i + 1,
+                        }}
+                    >
                         <div style={{ position: 'absolute', inset: 0, backgroundImage: `url("${svc.image}")`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.18) saturate(0.3)' }} />
                         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, color-mix(in srgb, var(--bg-deep) 93%, transparent) 45%, color-mix(in srgb, var(--bg-deep) 55%, transparent) 100%)', transition: 'background 0.8s ease' }} />
 
-                        <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', alignItems: 'center', maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center', width: '100%' }}>
+                        <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', alignItems: 'center', maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+                            <div className="services-inner-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center', width: '100%' }}>
                                 <div>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
                                         <span style={{ fontFamily: 'var(--font-serif)', fontSize: 64, fontWeight: 800, color: 'color-mix(in srgb, var(--gold) 12%, transparent)', lineHeight: 1, transition: 'color 0.6s ease' }}>{svc.number}</span>

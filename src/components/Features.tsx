@@ -157,14 +157,14 @@ export default function Features() {
     ];
     return (
         <section id="servicios-preview" className="section-pad" style={{ background: 'var(--bg-deep)', transition: 'background 0.8s ease' }}>
-            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
                 <div style={{ textAlign: 'center', marginBottom: 80 }}>
                     <p style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16, transition: 'color 0.6s ease' }}>La Plataforma</p>
                     <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, color: '#fff', lineHeight: 1.1 }}>
                         Diseño que trabaja mientras tú descansas
                     </h2>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 24 }}>
+                <div className="features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
                     {cards.map(({ id, tag, title, desc, component }) => (
                         <div key={id} className="glass shimmer-line" style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: 24 }}>
                             <div>

@@ -37,7 +37,7 @@ export default function Philosophy() {
             <div ref={parallaxRef} style={{ position: 'absolute', inset: '-10%', opacity: 0.35, backgroundImage: `url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=70&auto=format&fit=crop")`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.25) saturate(0.15) grayscale(0.6)' }} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, var(--bg-deeper) 0%, rgba(0,0,0,0.35) 50%, var(--bg-deeper) 100%)', transition: 'background 0.8s ease' }} />
 
-            <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+            <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
                 <div style={{ textAlign: 'center', marginBottom: 96 }}>
                     <p style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16, transition: 'color 0.6s ease' }}>El Manifiesto</p>
                     <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(36px, 4.5vw, 58px)', fontWeight: 700, color: '#fff', lineHeight: 1.1 }}>
@@ -47,7 +47,7 @@ export default function Philosophy() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                     {COMPARACIONES.map(({ izq, der }, i) => (
-                        <div key={i} ref={el => { if (el) rowRefs.current[i] = el; }} style={{ display: 'grid', gridTemplateColumns: '1fr 80px 1fr', alignItems: 'center', padding: '32px 0', borderBottom: i < COMPARACIONES.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                        <div key={i} ref={el => { if (el) rowRefs.current[i] = el; }} className="philosophy-row" style={{ display: 'grid', gridTemplateColumns: '1fr 80px 1fr', alignItems: 'center', padding: '32px 0', borderBottom: i < COMPARACIONES.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
                             <div className="phil-left" style={{ textAlign: 'right', paddingRight: 32 }}>
                                 <span style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(18px, 2.5vw, 34px)', fontWeight: 500, color: 'rgba(255,255,255,0.16)', fontStyle: 'italic', textDecoration: 'line-through', textDecorationColor: 'rgba(255,255,255,0.07)' }}>{izq}</span>
                             </div>
