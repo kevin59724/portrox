@@ -1,13 +1,21 @@
 const PLANES = [
     {
+<<<<<<< HEAD
         id: 'lanzamiento', nombre: 'Lanzamiento', tag: 'Para empezar', precio: '150', periodo: ' soles',
+=======
+        id: 'lanzamiento', nombre: 'Lanzamiento', tag: 'Para empezar', precio: '200', periodo: ' soles',
+>>>>>>> 4c8f7ec (Initial commit)
         desc: 'Una página de presentación profesional, diseñada a medida, lista en menos de 7 días.',
         features: ['Landing page de 1 sección', 'Diseño personalizado con IA', 'Copy optimizado para conversión', 'Responsive y accesible', 'Dominio y hosting no incluidos'],
         cta: 'Empezar ahora', featured: false,
         waMensaje: '¡Hola, quiero contratar el plan LANZAMIENTO',
     },
     {
+<<<<<<< HEAD
         id: 'identidad', nombre: 'Identidad', tag: 'El más elegido', precio: '250', periodo: ' soles',
+=======
+        id: 'identidad', nombre: 'Identidad', tag: 'El más elegido', precio: '300', periodo: ' soles',
+>>>>>>> 4c8f7ec (Initial commit)
         desc: 'Tu web completa — hasta 5 secciones, identidad visual cohesionada y optimización SEO desde el día uno.',
         features: ['Web completa hasta 5 secciones', 'Sistema de diseño propio', 'Copy de marca con IA + revisión humana', 'SEO técnico y semántico', 'Animaciones e interacciones', 'Entrega en menos de 10 días', '2 rondas de revisión incluidas'],
         cta: 'Comenzar mi proyecto', featured: true,
