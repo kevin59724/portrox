@@ -820,11 +820,11 @@ html.theme-biophilic .logo-pr-img {
    RESPONSIVE — Mobile First
    ══════════════════════════════════════════════════════════════ */
 
-/* Anti scroll horizontal: usamos clip en lugar de overflow-x:hidden
-   para no romper position:sticky que necesita herencia de scroll sin
-   ningún ancestor con overflow distinto de visible/clip. */
-* {
-  min-width: 0;
+/* overflow-x: clip en <html> previene scroll horizontal
+   SIN crear un scroll container (a diferencia de hidden)
+   → position:sticky funciona correctamente. */
+html {
+  overflow-x: clip;
 }
 
 /* ── Breakpoint principal: ≤ 768px ── */
