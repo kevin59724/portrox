@@ -9,14 +9,14 @@ const PLANES = [
     {
         id: 'identidad', nombre: 'Identidad', tag: 'El más elegido', precio: '300', periodo: ' soles',
         desc: 'Tu web completa — hasta 5 secciones, identidad visual cohesionada y optimización SEO desde el día uno.',
-        features: ['Web completa hasta 5 secciones', 'Sistema de diseño propio', 'Copy de marca con IA + revisión humana', 'SEO técnico y semántico', 'Animaciones e interacciones', 'Entrega en menos de 10 días', '2 rondas de revisión incluidas'],
+        features: ['Web completa hasta 5 secciones', 'Sistema de diseño propio', 'Copy de marca con IA + revisión humana', 'SEO técnico y semántico', 'Animaciones e interacciones', 'Entrega en menos de 10 días', '2 rondas de revisión incluidas', 'Dominio y hosting incluidos por 1 año'],
         cta: 'Comenzar mi proyecto', featured: true,
         waMensaje: '¡Hola, quiero contratar el plan IDENTIDAD',
     },
     {
         id: 'presencia', nombre: 'Presencia Total', tag: 'Para escalar', precio: 'A medida', periodo: '',
         desc: 'Proyectos complejos, e-commerce, plataformas y webs con múltiples páginas. Solución completa.',
-        features: ['Páginas ilimitadas', 'Diseño de sistema completo', 'Integración con CMS o e-commerce', 'Estrategia de contenido', 'Optimización de conversión (CRO)', 'Soporte mensual incluido', 'Consultoría de marca digital'],
+        features: ['Páginas ilimitadas', 'Diseño de sistema completo', 'Integración con CMS o e-commerce', 'Estrategia de contenido', 'Optimización de conversión (CRO)', 'Soporte mensual incluido', 'Consultoría de marca digital', 'Dominio y hosting incluidos'],
         cta: 'Cotizar proyecto', featured: false,
         waMensaje: '¡Hola, quiero contratar el plan PRESENCIA TOTAL',
     },
