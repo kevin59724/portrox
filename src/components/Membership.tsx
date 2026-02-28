@@ -1,3 +1,9 @@
+declare global {
+    interface Window {
+        fbq?: (...args: unknown[]) => void;
+    }
+}
+
 const PLANES = [
     {
         id: 'lanzamiento', nombre: 'Lanzamiento', tag: 'Para empezar', precio: '200', periodo: ' soles',
@@ -77,6 +83,9 @@ export default function Membership() {
                                 rel="noopener noreferrer"
                                 className={plan.featured ? 'btn-weighted btn-white-sweep' : 'btn-weighted btn-gold'}
                                 style={{ width: '100%', padding: '16px', fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', cursor: 'pointer', border: `1px solid ${plan.featured ? '#ffffff' : 'var(--gold)'}`, color: plan.featured ? '#ffffff' : 'var(--gold)', background: 'transparent', transition: 'border-color 0.6s ease, color 0.6s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, textDecoration: 'none' }}
+                                onClick={() => {
+                                    window.fbq?.('track', 'Contact', { plan: plan.nombre });
+                                }}
                             >
                                 {/* Icono WhatsApp */}
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
