@@ -10,21 +10,21 @@ const PLANES = [
         desc: 'Una página de presentación profesional, diseñada a medida, lista en menos de 7 días.',
         features: ['Landing page de 1 sección', 'Diseño personalizado con IA', 'Copy optimizado para conversión', 'Responsive y accesible', 'Dominio y hosting gratuitos (no personalizados)'],
         cta: 'Empezar ahora', featured: false,
-        waMensaje: '¡Hola, quiero contratar el plan LANZAMIENTO',
+        waMensaje: '¡Hola, quiero contratar el plan LANZAMIENTO!',
     },
     {
         id: 'identidad', nombre: 'Identidad', tag: 'El más elegido', precio: '300', periodo: ' soles',
         desc: 'Tu web completa — hasta 5 secciones, identidad visual cohesionada y optimización SEO desde el día uno.',
         features: ['Web completa hasta 5 secciones', 'Sistema de diseño propio', 'Copy de marca con IA + revisión humana', 'SEO técnico y semántico', 'Animaciones e interacciones', 'Entrega en menos de 10 días', '2 rondas de revisión incluidas', 'Dominio y hosting (personalizados) por 1 año'],
         cta: 'Comenzar mi proyecto', featured: true,
-        waMensaje: '¡Hola, quiero contratar el plan IDENTIDAD',
+        waMensaje: '¡Hola, quiero contratar el plan IDENTIDAD!',
     },
     {
         id: 'presencia', nombre: 'Presencia Total', tag: 'Para escalar', precio: 'A medida', periodo: '',
         desc: 'Proyectos complejos, e-commerce, plataformas y webs con múltiples páginas. Solución completa.',
         features: ['Páginas ilimitadas', 'Diseño de sistema completo', 'Integración con CMS o e-commerce', 'Estrategia de contenido', 'Optimización de conversión (CRO)', 'Soporte mensual incluido', 'Consultoría de marca digital', 'Dominio y hosting (personalizados) incluidos'],
         cta: 'Cotizar proyecto', featured: false,
-        waMensaje: '¡Hola, quiero contratar el plan PRESENCIA TOTAL',
+        waMensaje: '¡Hola, quiero cotizar mi proyecto con el plan PRESENCIA TOTAL!',
     },
 ];
 
@@ -78,7 +78,7 @@ export default function Membership() {
                             </div>
 
                             <a
-                                href={`https://wa.me/51997778512?text=${encodeURIComponent(plan.waMensaje)}`}
+                                href={`https://wa.me/51991616443?text=${encodeURIComponent(plan.waMensaje)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className={plan.featured ? 'btn-weighted btn-white-sweep' : 'btn-weighted btn-gold'}

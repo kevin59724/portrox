@@ -32,7 +32,7 @@ export default function Navbar() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                     <div style={{ width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
                         <img
-                            src="/logo-pr.png"
+                            src="/vaciocuadradob.png"
                             alt="PortRox logo"
                             className="logo-pr-img"
                             style={{ width: '100%', height: '100%', objectFit: 'contain' }}

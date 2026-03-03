@@ -12,13 +12,13 @@ export default function Footer() {
                     {/* Marca */}
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-                            <div style={{ width: 32, height: 32, border: '1px solid var(--gold)', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'border-color 0.6s ease' }}>
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                    <rect x="1" y="1" width="6" height="6" stroke="var(--gold)" strokeWidth="1.4" rx="1" />
-                                    <rect x="9" y="1" width="6" height="6" stroke="var(--gold)" strokeWidth="1.4" rx="1" />
-                                    <rect x="1" y="9" width="6" height="6" stroke="var(--gold)" strokeWidth="1.4" rx="1" />
-                                    <path d="M9 12h6M12 9v6" stroke="var(--gold)" strokeWidth="1.4" strokeLinecap="round" />
-                                </svg>
+                            <div style={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                                <img
+                                    src="/vaciocuadradob.png"
+                                    alt="PortRox logo"
+                                    className="logo-pr-img"
+                                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                                />
                             </div>
                             <span style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 700, color: '#fff', letterSpacing: '0.04em' }}>PortRox</span>
                         </div>
